@@ -1,4 +1,0 @@
-shootsoft.github.io
-===================
-
-Blog
