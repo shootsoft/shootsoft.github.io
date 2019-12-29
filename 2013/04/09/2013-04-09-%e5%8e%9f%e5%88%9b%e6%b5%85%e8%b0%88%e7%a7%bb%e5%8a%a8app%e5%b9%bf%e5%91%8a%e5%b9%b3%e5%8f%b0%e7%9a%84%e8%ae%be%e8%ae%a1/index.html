@@ -1,0 +1,368 @@
+<!DOCTYPE HTML>
+<html lang="null">
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="description" content="射日工作室, Shoot Sun Studio"/>
+
+
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>[原创]浅谈移动App广告平台的设计 | Shoot Sun Studio</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+
+
+    
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="[原创]浅谈移动App广告平台的设计">
+            
+	            [原创]浅谈移动App广告平台的设计
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/Others">
+            Others
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/移动广告平台" title='移动广告平台'>
+                        移动广告平台
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2013/04/09</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>2455</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>依靠广告盈利占据了国内移动App盈利模式的半壁江山。很多App刚刚有点流量的时候都会考虑是不是做个自己的广告投放系统以支撑业务未来的需求。</p>
+<p>笔者在工作中有幸接触到了一些有这类需求的App，这些App在自有广告系统中总有这样或那样的功能性缺失，这不可避免的会造成一些业务上的损失。</p>
+<p>主要的功能缺陷集中在对品牌类广告主的需求满足上。相对于效果广告主来说，品牌广告主是一类让人又爱又恨的主儿。爱是因为品牌们都是有钱的主儿，能被品牌们看上也说明了自己的江湖地位。恨是因为品牌们都是事儿妈，销售和运营们7*24的伺候着不说，还总提出层出不穷匪夷所思的投放功能需求才是最让人恨的地方。</p>
+<h2 id="尽量使用国内服务"><a href="#尽量使用国内服务" class="headerlink" title="尽量使用国内服务"></a>尽量使用国内服务</h2><p>这一点很重要，必须先说明：不管你看到的国外的某个网站有多牛，追踪效果、报表有多酷，但是只要你的目标用户在国内，尽量使用国内的服务，原因不细说，心里明白就行。</p>
+<h2 id="使用WebView展示广告"><a href="#使用WebView展示广告" class="headerlink" title="使用WebView展示广告"></a>使用WebView展示广告</h2><p>从最基本的图片显示需求开始，80%的开发者首先想到的肯定都是有个尺寸，图片地址，点击地址，在App上使用一个Image View显示一下应该就足够了吧，因为业务人员往往就是这样描述他们的业务场景的。但是在实际的业务场景中往往会有很多变数：比如需要增加展示监控，增加广告关闭按钮（免得金山毒霸之类的给你的App上加一个，还有可能引发不兼容等问题）。</p>
+<p>此外，移动领域的广告让品牌广告主非常心动的一点就是有丰富的人机互动和表现能力，比如晃动，涂抹，重力感应等。如果有这类需求开发人员会发现原来的ImageView太简陋了，而且需求不明确的情况下也没法实现开发和投放，因此基本上调研之后都会转而使用Web View来展示广告。WebView的缺点是比较消耗资源，一个WebView的创建一般都需要200ms左右，但是只要稍微做些优化，这个损耗和App3,4秒的启动速度相比就不足挂齿了，用户体验不会有明显差异。比如WebView要渲染完毕再展示，出场有个动画（这个地方的灵活性可以参考jquery的动画）就可以给用户更好的体验。</p>
+<p>。这时候投放系统可以实现图片，文字链，视频，HTML5动画等广告展示形式，几乎无所不能了，如果仔细研究一下各家专业移动广告平台的投放，这些几乎已经是标配。</p>
+<h2 id="展示监控"><a href="#展示监控" class="headerlink" title="展示监控"></a>展示监控</h2><p>很多品牌广告主往往一上来就指明要展示监控，说简单一些就是用户每次看到广告，需要通知广告主发生了一次展示。品牌广告主们往往不会拥有自己的系统，而是找代理商，代理商有时还会再找个第三方监控平台以示公正。这一点要是不能满足，这单估计就保不住了。做展示监控要特别注意几点：</p>
+<ul>
+<li>展示监控链接会有跳转行为，所以千万别访问一下就完事，要有两跳，但至多三跳。一般来说四跳非常非常少见，五跳以上基本可以认为对方的系统出问题了…；</li>
+<li>有的监控链接还会要求有动态参数，一般是用户的标识符，包括iOS的MAC地址，广告追踪ID，OpenUIDID(UDID可以不用再考虑了)；Android的EMSI SIMID AndroidId等；</li>
+<li>有些情况下也可以做服务器转发，但是客户端的IP之类的信息得附带上，同时得与代理商和第三方监控提前沟通，否则转发服务器的IP会被认为是作弊；</li>
+<li>展示次数差异一般上下浮动10%是正常现象，因为国内网络复杂度及终端用户的网络质量都是不可控因素。</li>
+</ul>
+<h2 id="点击链接"><a href="#点击链接" class="headerlink" title="点击链接"></a>点击链接</h2><p>点击链接与显示链接一样，可能会有参数的替换。所以在App前端的系统设计上千万不要把参数和顺序定死，最好的方式是模板式替换。如果App本身也带监控，最好是采用多线程式同时触发。可以想到如果采用顺序式触发万一某个服务挂了就会影响后续的监控。</p>
+<p>在点击链接的跳转上，每一次跳转可能都有5%左右的损失，所以要提升到达率就需要尽可能减少跳转的次数。</p>
+<p>不同的系统兼容性不一样，这里还有一个URLencode的坑：要注意每一个链接都是有多个参数的，拼接跳转链接时记得做URLencode处理，不要丢参数；同时每一个参数最好做一次decode的检查，特别是参数有中文的情况下，没有URLencode过的要专门处理一下。</p>
+<p>点击之后的打开行为，一般分为应用内打开，应用外打开，其他行为三类。手机上比较独特的一点就是其他行为，包括拨打电话，发送短信，邮件，启动其他应用等，这些基本都可以通过系统调用实现，在开发的时候要特别注意。</p>
+<p>iOS6以后有个应用内下载功能要注意集成进App，能非常大的提升App类广告的转化率。</p>
+<p>笔者深有体会的是Android的应用外打开非常坑爹，会导致50%以上的点击丢失！原因是用户安装了两款以上的浏览器时系统会询问用户。一个非常有用的实践中得来的经验是App内置一个浏览器来打开着陆页，或者强制指定一个默认浏览器。</p>
+<h2 id="屏幕密度"><a href="#屏幕密度" class="headerlink" title="屏幕密度"></a>屏幕密度</h2><p>Android上的屏幕密度问题。得益于苹果高超的工业设计和制造水准，将高清屏引入了智能手机产品当中。但悲摧的是由于Android的制造厂家众多，标准不一，在Android上要特别注意对高清屏的处理，否则 图片尺寸变形在所难免。</p>
+<h2 id="视频广告"><a href="#视频广告" class="headerlink" title="视频广告"></a>视频广告</h2><p>视频广告虽然目前还不是主流，但还是值得一提。首先是视频的自动播放，一般广告主会要求在Banner上点击以后全屏播放，如果用着陆页直接链接视频文件的方式，可以实现自动播放，但是会无法追踪用户的后续行为。解决办法是要么在Banner上直接播放，要么自己用Native Code处理一下。其次是用户观看视频的时长追踪。举个栗子，假如一个视频有25秒，广告主如果要求提供看完视频的用户个数，看完20秒视频的用户个数，看完15秒视频的用户个数，系统得能够支持这样的追踪。而且视频广告一定要提前在不同的Android机型和系统版本上测试兼容性。</p>
+<h2 id="广告后台"><a href="#广告后台" class="headerlink" title="广告后台"></a>广告后台</h2><p>广告后台要注意的首先就是各种定向的需求，专业广告平台的定向类型非常多，但是作为非专业的App后台，只需包含地域定向和按小时包段投递等简单定向即可。如果想更进一步深入研究广告投放系统，可以参考一下</p>
+<p>百度广告管家（<a href="http://adm.baidu.com/index.html）" target="_blank" rel="noopener">http://adm.baidu.com/index.html）</a></p>
+<p>谷歌DFP（<a href="https://www.google.com/dfp/）" target="_blank" rel="noopener">https://www.google.com/dfp/）</a></p>
+<p>OpenX（<a href="http://www.openx.com/mobile）" target="_blank" rel="noopener">http://www.openx.com/mobile）</a></p>
+<p>以及师徒网的计算广告学这门课程（<a href="http://sheetoo.com/app/course/ov?course_id=200）" target="_blank" rel="noopener">http://sheetoo.com/app/course/ov?course_id=200）</a></p>
+<p>最后再说说广告的投放和渲染。为了节约服务器流量，投放出来的广告一般是数据加模板地址，模板放在CDN上，本地可以对模板和图片等广告物料资源进行缓存。其余诸如把模板下载到本地，然后填充数据，再使用WebView渲染等都是非常基础和具体的开发工作了，这里就不再一一细说。</p>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2013/04/25/2013-04-25-2013-qcon-beijing-%e6%b8%b8%e8%ae%b01/" class="pre-post btn btn-default" title='2013 QCon Beijing 游记1'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">2013 QCon Beijing 游记1</span>
+        </a>
+    
+    
+        <a href="/2012/10/10/2012-10-10-c%e5%bc%80%e6%ba%90%e5%9f%ba%e4%ba%8ednspod%e7%9a%84%e5%8a%a8%e6%80%81%e5%9f%9f%e5%90%8d%e8%a7%a3%e6%9e%90%e5%b7%a5%e5%85%b7simpleddns/" class="next-post btn btn-default" title='[C#开源]基于DNSPod的动态域名解析工具SimpleDDns'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">[C#开源]基于DNSPod的动态域名解析工具SimpleDDns</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                
+                    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Google Search"><button type="submit" class="search-form-submit">谷歌搜索</button><input type="hidden" name="sitesearch" value="http://blog.shootsoft.net"></form>
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>Pluto Video Snapshoter 1.4.3 Released! <br/>
+Download：<a href="https://github.com/shootsoft/PlutoVideoSnapshoter" title="fork me" target="_blank">PlutoVideoSnapshoter</a> <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/shootsoft" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Categories</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Documents/"><i class="fa" aria-hidden="true">Documents</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Download/"><i class="fa" aria-hidden="true">Download</i></a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Download/News/"><i class="fa" aria-hidden="true">News</i></a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Erlang/"><i class="fa" aria-hidden="true">Erlang</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link current" href="/categories/Linux/"><i class="fa" aria-hidden="true">Linux</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/"><i class="fa" aria-hidden="true">MySQL</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/News/"><i class="fa" aria-hidden="true">News</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Others/"><i class="fa" aria-hidden="true">Others</i></a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/others/"><i class="fa" aria-hidden="true">others</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/"><i class="fa" aria-hidden="true">June 2015</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/"><i class="fa" aria-hidden="true">November 2013</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/"><i class="fa" aria-hidden="true">October 2013</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/"><i class="fa" aria-hidden="true">July 2013</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/04/"><i class="fa" aria-hidden="true">April 2013</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/"><i class="fa" aria-hidden="true">October 2012</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/"><i class="fa" aria-hidden="true">May 2012</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/"><i class="fa" aria-hidden="true">March 2012</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/"><i class="fa" aria-hidden="true">October 2011</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/"><i class="fa" aria-hidden="true">June 2011</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/"><i class="fa" aria-hidden="true">May 2011</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/02/"><i class="fa" aria-hidden="true">February 2011</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/01/"><i class="fa" aria-hidden="true">January 2011</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08/"><i class="fa" aria-hidden="true">August 2010</i></a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06/"><i class="fa" aria-hidden="true">June 2010</i></a><span class="archive-list-count">7</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/htaccess文件权限/" style="font-size: 10px;">.htaccess文件权限</a> <a href="/tags/1175/" style="font-size: 10px;">1175</a> <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Australia/" style="font-size: 10px;">Australia</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/Casperjs/" style="font-size: 10px;">Casperjs</a> <a href="/tags/DNSPod/" style="font-size: 10px;">DNSPod</a> <a href="/tags/Debian/" style="font-size: 13.33px;">Debian</a> <a href="/tags/Erlang/" style="font-size: 20px;">Erlang</a> <a href="/tags/Error-Code-1175/" style="font-size: 10px;">Error Code: 1175</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linode/" style="font-size: 13.33px;">Linode</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Linux拷贝文件/" style="font-size: 10px;">Linux拷贝文件</a> <a href="/tags/LuManager/" style="font-size: 13.33px;">LuManager</a> <a href="/tags/Migration/" style="font-size: 10px;">Migration</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/MySQL安装失败/" style="font-size: 10px;">MySQL安装失败</a> <a href="/tags/OpenSSL/" style="font-size: 10px;">OpenSSL</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/QCon/" style="font-size: 16.67px;">QCon</a> <a href="/tags/Rewrite/" style="font-size: 10px;">Rewrite</a> <a href="/tags/SAE/" style="font-size: 10px;">SAE</a> <a href="/tags/SAE-Storage/" style="font-size: 10px;">SAE Storage</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sina-App-Engine/" style="font-size: 10px;">Sina App Engine</a> <a href="/tags/Storage/" style="font-size: 10px;">Storage</a> <a href="/tags/TestFlight/" style="font-size: 10px;">TestFlight</a> <a href="/tags/Unable-to-load-crypto-library/" style="font-size: 10px;">Unable to load crypto library</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/WinSCP/" style="font-size: 10px;">WinSCP</a> <a href="/tags/Workbench/" style="font-size: 10px;">Workbench</a> <a href="/tags/c-开源/" style="font-size: 10px;">c#开源</a> <a href="/tags/crypto-app/" style="font-size: 10px;">crypto.app</a> <a href="/tags/editor/" style="font-size: 10px;">editor</a> <a href="/tags/int转换/" style="font-size: 10px;">int转换</a> <a href="/tags/ip/" style="font-size: 10px;">ip</a> <a href="/tags/mysqli/" style="font-size: 10px;">mysqli</a> <a href="/tags/mysqli源码/" style="font-size: 10px;">mysqli源码</a> <a href="/tags/odbc-start/" style="font-size: 10px;">odbc:start()</a> <a href="/tags/plist/" style="font-size: 10px;">plist</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/unixodbc-dev/" style="font-size: 10px;">unixodbc-dev</a> <a href="/tags/信用卡/" style="font-size: 10px;">信用卡</a> <a href="/tags/单独安装mysqli/" style="font-size: 10px;">单独安装mysqli</a> <a href="/tags/域名动态解析/" style="font-size: 10px;">域名动态解析</a> <a href="/tags/多IP/" style="font-size: 10px;">多IP</a> <a href="/tags/多台/" style="font-size: 10px;">多台</a> <a href="/tags/多站点/" style="font-size: 10px;">多站点</a> <a href="/tags/安装/" style="font-size: 10px;">安装</a> <a href="/tags/开源/" style="font-size: 13.33px;">开源</a> <a href="/tags/批量上传/" style="font-size: 13.33px;">批量上传</a> <a href="/tags/批量删除/" style="font-size: 10px;">批量删除</a> <a href="/tags/批量更新/" style="font-size: 10px;">批量更新</a> <a href="/tags/教程/" style="font-size: 10px;">教程</a> <a href="/tags/数值运算符/" style="font-size: 10px;">数值运算符</a> <a href="/tags/比较运算符/" style="font-size: 10px;">比较运算符</a> <a href="/tags/移位运算符/" style="font-size: 10px;">移位运算符</a> <a href="/tags/移动广告平台/" style="font-size: 10px;">移动广告平台</a> <a href="/tags/自定义函数/" style="font-size: 10px;">自定义函数</a> <a href="/tags/解决/" style="font-size: 10px;">解决</a> <a href="/tags/解决办法/" style="font-size: 10px;">解决办法</a> <a href="/tags/设备列表/" style="font-size: 10px;">设备列表</a> <a href="/tags/运算符/" style="font-size: 10px;">运算符</a> <a href="/tags/逻辑运算符/" style="font-size: 10px;">逻辑运算符</a> <a href="/tags/配置文件/" style="font-size: 10px;">配置文件</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.shenliyang.com" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>

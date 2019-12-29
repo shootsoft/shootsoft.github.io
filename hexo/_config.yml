@@ -5,14 +5,14 @@
 # Site
 title: Shoot Sun Studio
 subtitle: An open source programmer's blog
-description:
+description: 射日工作室, Shoot Sun Studio
 author: Michael Yin
 language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://en.shootsoft.net
+url: http://blog.shootsoft.net
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
-theme: landscape
+theme: snippet
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
