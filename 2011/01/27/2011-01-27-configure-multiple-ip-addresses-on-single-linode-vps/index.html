@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html lang="null">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="keywords" content="Apache,Debian,Linode,VPS,多IP,多站点">
+
+
+<meta name="description" content="新年更新了一下空间，升级到了Linode的VPS。这个群众都说好的VPS用起来是不错。可以选择以下的机房：
+• London, GB, UK
+• Newark, NJ, USA
+• Atlant...">
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+<title>
+    
+    为Linode VPS配置多个IP及同一个VPS多个站点的配置（Debian版） |
+    
+    Shoot Sun Studio
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+    
+
+
+
+    
+
+</head></html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    http://snippet.shenliyang.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.shootsoft.net">
+                        Shoot Sun Studio</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="为Linode VPS配置多个IP及同一个VPS多个站点的配置（Debian版）">
+            
+            为Linode VPS配置多个IP及同一个VPS多个站点的配置（Debian版）
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Documents/">Documents</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Apache/">Apache</a> <a class="tag-link" href="/tags/Debian/">Debian</a> <a class="tag-link" href="/tags/Linode/">Linode</a> <a class="tag-link" href="/tags/VPS/">VPS</a> <a class="tag-link" href="/tags/多IP/">多IP</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2011/01/27</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                3258</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>新年更新了一下空间，升级到了<a href="http://www.linode.com/?r=9f0decd015b48a934934f3a59cee207d36de4c47" target="_blank" rel="noopener">Linode</a>的VPS。这个群众都说好的VPS用起来是不错。可以选择以下的机房：</p>
+<p>• London, GB, UK</p>
+<p>• Newark, NJ, USA</p>
+<p>• Atlanta, GA, USA</p>
+<p>• Dallas, TX, USA</p>
+<p>• Fremont, CA, USA</p>
+<p>参考：<a href="http://www.linode.com/?r=9f0decd015b48a934934f3a59cee207d36de4c47" target="_blank" rel="noopener">http://www.linode.com/why.cfm</a> ，我选的是Fremont</p>
+<p>为了方便管理网站，我又额外购买了一个IP地址，貌似我的<a href="http://www.linode.com/?r=9f0decd015b48a934934f3a59cee207d36de4c47" target="_blank" rel="noopener">Linode 512</a>的配置只使用最多2个IP地址了。我对Debian比较熟悉，所以安装系统的时候毫不犹豫的选择了Debian，对Linux的不熟悉的还是不要选择Debian了，建议选择CentOS，参考一下网上的教程，安装Kloxo面板。</p>
+<p>首先是购买多个IP地址，进入Linode的Dashboard界面，点击Extras，就能购买额外的IP地址了，由于Linode绑定了信用卡，所以会直接从信用卡上扣钱，每个额外IP地址的价格是$12一年，每个月是$1。如下图：</p>
+<p><img alt src="http://www.shootsoft.net/wp-content/uploads/2011/01/linode-extras.png" title="Linode Extras" class="alignnone" width="799" height="273"></p>
+<p>成功购买了IP地址之后，在Remote Access里可以看到所有的IP地址信息：</p>
+<p><img alt src="http://www.shootsoft.net/wp-content/uploads/2011/01/linode-remote-access.png" title="Linode Remote Access" class="alignnone" width="935" height="333"></p>
+<p>下面说重点：Debian的多个IP地址配置。首先看了一个《<a href="http://www.seamaple.net/2010/03/05/%E4%B8%BAlinode-vps%E9%85%8D%E7%BD%AE%E5%A4%9A%E4%B8%AAip%E6%95%99%E7%A8%8B%EF%BC%88%E5%8F%82%E8%80%83linode%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%EF%BC%89/" target="_blank" rel="noopener">为linode VPS配置多个IP教程</a>》，估计那个是CentOS的教程，Debian下IP地址配置文件是 /etc/network/interfaces 这个文件。用Putty登录Linode，用vim或者emacs打开(以emacs为例)：</p>
+<p>emacs /etc/network/interfaces</p>
+<p>默认的配置是通过DHCP自动获取的，内容如下：</p>
+<blockquote>
+<p>auto lo</p>
+</blockquote>
+<blockquote>
+<p>iface lo inet loopback</p>
+<p>auto eth0</p>
+</blockquote>
+<blockquote>
+<p>iface eth0 inet dhcp</p>
+</blockquote>
+<p>替换成</p>
+<blockquote>
+<p>auto lo</p>
+</blockquote>
+<blockquote>
+<p>iface lo inet loopback</p>
+<p>auto eth0</p>
+</blockquote>
+<blockquote>
+<p>#iface eth0 inet dhcp</p>
+</blockquote>
+<blockquote>
+<p>iface eth0 inet static</p>
+</blockquote>
+<blockquote>
+<p>address 173.230.99.11</p>
+</blockquote>
+<blockquote>
+<p>netmask 255.255.255.0</p>
+</blockquote>
+<blockquote>
+<p>gateway 173.230.99.1</p>
+<p>auto eth0:0</p>
+</blockquote>
+<blockquote>
+<p>iface eth0:0 inet static</p>
+</blockquote>
+<blockquote>
+<p>address 173.230.44.88</p>
+</blockquote>
+<blockquote>
+<p>netmask 255.255.255.0</p>
+</blockquote>
+<blockquote>
+<p>gateway 173.230.44.1</p>
+</blockquote>
+<p>173.230.99.11和173.230.44.88分别是linode分配给你的ip</p>
+<p>173.230.99.1和173.230.44.1分别是linode分配给你的网关</p>
+<p>Ctrl + X, Ctrl +S 保存，然后重启一下Linode的机器，在Dashboard界面上就能完成。</p>
+<p>重启之后应该完成了多个IP地址的配置。</p>
+<p>在这之前建议先自己检查一下配置，不要拼错了，否则可能无法远程登录到机器上了。</p>
+<p>如果你不熟悉这个过程的话，可以考虑删了机器重来:-P</p>
+<p>多个站点的配置</p>
+<p>登录Linode的Debian，首先运行一下apt-get update，更新一下源，安装Apache2，php5，mysql和phpmyadmin:</p>
+<p>apt-get install apache2 mysql-server php5 phpmyadmin php5-gd</p>
+<p>安装完成后基本上都能用了，但是phpmyadmin貌似缺少了一个快捷方式，apache2的默认运行根目录是/var/www</p>
+<p>phpmyadmin的安装目录是/usr/share/phpmyadmin</p>
+<p>运行这个 ln -s /usr/share/phpmyadmin /var/www/phpmyadmin</p>
+<p>现在打开浏览器，访问：<a href="http://ip/phpmyadmin" target="_blank" rel="noopener">http://ip/phpmyadmin</a> 就能访问phpmyadmin了</p>
+<p>apache2的安装目录在/etc/apache2/下面，要配置多个站点，首先要编辑一个配置文件</p>
+<p>/etc/apache2/sites-available/ 就是所有站点的配置信息，我们把default拷贝一份</p>
+<p>cp default shootsoft.net</p>
+<p>然后用emacs打开shootsoft.net这个配置文件</p>
+<p>把 DocumentRoot /var/www/ 后面的路径改为我们的站点根目录，比如 /var/web/shootsoft</p>
+<p>后面的：&lt;Directory /var/www/&gt; 里面的路径也一样改掉。</p>
+<p>另外在DocumentRoot 这一行之上加上两行</p>
+<blockquote>
+<p>ServerName <a href="http://www.shootsoft.net" target="_blank" rel="noopener">www.shootsoft.net</a></p>
+</blockquote>
+<blockquote>
+<p>ServerAlias shootsoft.net</p>
+</blockquote>
+<p>然后在site-enabled目录下创建一个shootsoft.net的快捷方式</p>
+<p>ln -s /etc/apache2/sites-available/shootsoft.net /etc/apache2/sites-enabled/shootsoft.net</p>
+<p>重启apache</p>
+<p>/etc/ini.d/apache2 restart</p>
+<p>然后就生效了。</p>
+<p>如果有更多的站点，可以效仿shootsoft.net的配置去修改</p>
+<p>另外要注意的就是自己创建的站点目录，比如/var/web/shootsoft可能缺少权限，运行一下：</p>
+<blockquote>
+<p>chmod 777 /var/web/shootsoft</p>
+</blockquote>
+<p>就OK了。</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2011/01/27/2011-01-27-incorrect-erlang-application-configuration/" class="pre-post btn btn-default" title='Erlang应用程序配置不正确导致不正常启动的问题'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Erlang应用程序配置不正确导致不正常启动的问题</span>
+    </a>
+    
+    
+    <a href="/2010/08/01/2010-08-01-shootsearch-0-2/" class="next-post btn btn-default" title='ShootSearch 0.2版 [C#][开源]'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            ShootSearch 0.2版 [C#][开源]</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'null'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE HTML>
+<html lang="null">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="keywords" content="Erlang,数值运算符,比较运算符,移位运算符,运算符,逻辑运算符">
+
+
+<meta name="description" content="参考：http://www.erlang.org/doc/reference_manual/expressions.html
+Erlang的比较运算符
+            op       ...">
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+<title>
+    
+    Erlang的运算符(比较运算符,数值运算符,移位运算符,逻辑运算符) |
+    
+    Shoot Sun Studio
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+    
+
+
+
+    
+
+</head></html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    http://snippet.shenliyang.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.shootsoft.net">
+                        Shoot Sun Studio</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Erlang的运算符(比较运算符,数值运算符,移位运算符,逻辑运算符)">
+            
+            Erlang的运算符(比较运算符,数值运算符,移位运算符,逻辑运算符)
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Erlang/">Erlang</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Erlang/">Erlang</a> <a class="tag-link" href="/tags/数值运算符/">数值运算符</a> <a class="tag-link" href="/tags/比较运算符/">比较运算符</a> <a class="tag-link" href="/tags/移位运算符/">移位运算符</a> <a class="tag-link" href="/tags/运算符/">运算符</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2011/02/22</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                3232</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>参考：<a href="http://www.erlang.org/doc/reference_manual/expressions.html" target="_blank" rel="noopener">http://www.erlang.org/doc/reference_manual/expressions.html</a></p>
+<p>Erlang的比较运算符</p>
+<table border="1" cellspacing="0" cellpadding="0"><br>  <tr><br>    <td style="width: .6673in;"><br>      op<br>    </td><br><br>    <td style="width: 120px;"><br>      Description<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      ==<br>    </td><br><br>    <td style="width: 120px;"><br>      等于<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      /=<br>    </td><br><br>    <td style="width: 120px;"><br>      不等于<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      =&lt;<br>    </td><br><br>    <td style="width: 120px;"><br>      小于等于<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      &lt;<br>    </td><br><br>    <td style="width: 120px;"><br>      小于<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      &gt;=<br>    </td><br><br>    <td style="width: 120px;"><br>      大于等于<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      &gt;<br>    </td><br><br>    <td style="width: 120px;"><br>      大于<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      =:=<br>    </td><br><br>    <td style="width: 120px;"><br>      精确的等于<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      =/=<br>    </td><br><br>    <td style="width: 120px;"><br>      精确的不等于<br>    </td><br>  </tr><br></table>
+
+<div style="clear: both;"><br></div>
+
+<div style="clear: both;"><br>  等于和精确等于的区别：<br></div>
+
+<p>如果要比较两个数，如果两个数之间是不同的类型，比如float和int那么，==操作会首先把两个数字转换成相同的相同类型。举例：</p>
+<p>1&gt; 1==1.0.</p>
+<p>true</p>
+<p>2&gt; 1=:=1.0.</p>
+<p>false</p>
+<p>所以一般推荐用精确等于去比较</p>
+<p>比较运算符的大小级别：</p>
+<p>number &lt; atom &lt; reference &lt; fun &lt; port &lt; pid &lt; tuple &lt; list &lt; bit string</p>
+<p>3&gt; 1 &gt; a.</p>
+<p>false</p>
+<table border="1" cellspacing="0" cellpadding="0"><br>  <tr><br>    <td style="width: .7298in;"><br>      op<br>    </td><br><br>    <td style="width: 198px;"><br>      Description<br>    </td><br><br>    <td style="width: 149px;"><br>      Argument type<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      +<br>    </td><br><br>    <td style="width: 198px;"><br>    </td><br><br>    <td style="width: 149px;"><br>      number<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      &#8211;<br>    </td><br><br>    <td style="width: 198px;"><br>    </td><br><br>    <td style="width: 149px;"><br>      number<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      +<br>    </td><br><br>    <td style="width: 198px;"><br>    </td><br><br>    <td style="width: 149px;"><br>      number<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      &#8211;<br>    </td><br><br>    <td style="width: 198px;"><br>    </td><br><br>    <td style="width: 149px;"><br>      number<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      *<br>    </td><br><br>    <td style="width: 198px;"><br>    </td><br><br>    <td style="width: 149px;"><br>      number<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      /<br>    </td><br><br>    <td style="width: 198px;"><br>      浮点数除法，结果是浮点数<br>    </td><br><br>    <td style="width: 149px;"><br>      number<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      bnot<br>    </td><br><br>    <td style="width: 198px;"><br>      一元not运算符<br>    </td><br><br>    <td style="width: 149px;"><br>      integer<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      div<br>    </td><br><br>    <td style="width: 198px;"><br>      整数除法，结果是整数<br>    </td><br><br>    <td style="width: 149px;"><br>      integer<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      rem<br>    </td><br><br>    <td style="width: 198px;"><br>      求玉树<br>    </td><br><br>    <td style="width: 149px;"><br>      integer<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      band<br>    </td><br><br>    <td style="width: 198px;"><br>      and运算<br>    </td><br><br>    <td style="width: 149px;"><br>      integer<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      bor<br>    </td><br><br>    <td style="width: 198px;"><br>      or运算<br>    </td><br><br>    <td style="width: 149px;"><br>      integer<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      bxor<br>    </td><br><br>    <td style="width: 198px;"><br>      xor异或运算<br>    </td><br><br>    <td style="width: 149px;"><br>      integer<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      bsl<br>    </td><br><br>    <td style="width: 198px;"><br>      左移位操作<br>    </td><br><br>    <td style="width: 149px;"><br>      integer<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .7298in;"><br>      bsr<br>    </td><br><br>    <td style="width: 198px;"><br>      右移位操作<br>    </td><br><br>    <td style="width: 149px;"><br>      integer<span style="font-size: 13px; line-height: 19px;"> </span><br>    </td><br>  </tr><br></table>
+
+<p>逻辑运算符</p>
+<table border="1" cellspacing="0" cellpadding="0"><br>  <tr><br>    <td style="width: .6673in;"><br>      op<br>    </td><br><br>    <td style="width: 120px;"><br>      Description<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      not<br>    </td><br><br>    <td style="width: 120px;"><br>      一元逻辑not<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      and<br>    </td><br><br>    <td style="width: 120px;"><br>      逻辑and<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      or<br>    </td><br><br>    <td style="width: 120px;"><br>      逻辑or<br>    </td><br>  </tr><br><br>  <tr><br>    <td style="width: .6673in;"><br>      xor<br>    </td><br><br>    <td style="width: 120px;"><br>      逻辑xor<br>    </td><br>  </tr><br></table>
+
+<div style="clear: both;"><br></div>
+
+<div style="clear: both;"><br>  原子true 和false表示逻辑的&#8221;真&#8221;和&#8221;假&#8221;<br></div>
+
+<p>此外，逻辑运算符还包括一个orelse 和andalso</p>
+<p>原始的or和and是不带&#8221;短路运算&#8221;操作的，而orelse和andalso是带短路运算操作的。</p>
+<p>短路运算举例</p>
+<p>Express1 and Express2</p>
+<p>Express1 andalso Express2</p>
+<p>如果Express1 为假，and会继续判断Express2，然后整体判定为假，而andalso&#8221;短路&#8221;操作，直接判定整个表达式为假，从效率上来说，andalso会高一些</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2011/05/24/2011-05-24-nuffnang/" class="pre-post btn btn-default" title='千人挑战，拿福能在行动&#8211;免费50元'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            千人挑战，拿福能在行动&#8211;免费50元</span>
+    </a>
+    
+    
+    <a href="/2011/02/12/2011-02-12-credit-cards-support-linode/" class="next-post btn btn-default" title='Linode支持的信用卡'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Linode支持的信用卡</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'null'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+</body>
+</html>

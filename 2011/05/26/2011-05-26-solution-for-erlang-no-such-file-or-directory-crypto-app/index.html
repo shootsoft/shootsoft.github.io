@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<html lang="null">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="keywords" content="Erlang,crypto.app,OpenSSL,ssl,解决">
+
+
+<meta name="description" content="&nbsp;
+  一台新安装的Debian Linux 6.0, 安装了Erlang R14B02. 直接运行erl，输入一些测试，没有问题。但是部署一个Erlang的应用程序之后，启动出错，主...">
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+<title>
+    
+    Erlang {&amp;#8220;no such file or directory&amp;#8221;,&amp;#8221;crypto.app&amp;#8221;}  的解决方法 |
+    
+    Shoot Sun Studio
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+    
+
+
+
+    
+
+</head></html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    http://snippet.shenliyang.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.shootsoft.net">
+                        Shoot Sun Studio</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Erlang {&amp;#8220;no such file or directory&amp;#8221;,&amp;#8221;crypto.app&amp;#8221;}  的解决方法">
+            
+            Erlang {&amp;#8220;no such file or directory&amp;#8221;,&amp;#8221;crypto.app&amp;#8221;}  的解决方法
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Erlang/">Erlang</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Erlang/">Erlang</a> <a class="tag-link" href="/tags/OpenSSL/">OpenSSL</a> <a class="tag-link" href="/tags/crypto-app/">crypto.app</a> <a class="tag-link" href="/tags/ssl/">ssl</a> <a class="tag-link" href="/tags/解决/">解决</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2011/05/26</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                3139</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>&nbsp;</p>
+<p style="margin:0in;font-size:11.0pt"><br>  <span lang="zh-CN" style="font-family:宋体">一台新安装的</span><span lang="en-US" style="font-family:Calibri">Debian Linux 6.0, </span><span lang="zh-CN" style="font-family:宋体">安装了</span><span lang="en-US" style="font-family:Calibri">Erlang R14B02</span><span lang="en-US" style="font-family:宋体">. </span><span lang="zh-CN" style="font-family:宋体">直接运行</span><span lang="en-US" style="font-family:宋体">erl</span><span lang="zh-CN" style="font-family:宋体">，输入一些测试，没有问题。但是部署一个</span><span lang="en-US" style="font-family:宋体">Erlang</span><span lang="zh-CN" style="font-family:宋体">的应用程序之后，启动出错，主要提示为：</span><br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  &nbsp;<br></p>
+
+<p lang="en-US" style="margin:0in;font-family:Calibri;font-size:17.0pt;color:#222222"><br>  {“no such file or directory”,”crypto.app”}<br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  &nbsp;<br></p>
+
+<p style="margin:0in;font-size:11.0pt"><br>  <span lang="zh-CN" style="font-family:宋体">这个</span><span lang="en-US" style="font-family:Calibri">Erlang</span><span lang="zh-CN" style="font-family:宋体">的应用程序用到了</span><span lang="en-US" style="font-family:Calibri">openssl</span><span lang="zh-CN" style="font-family:宋体">相关的类库，检查了一遍系统的类库，发现</span><span lang="en-US" style="font-family:Calibri"> openssl-dev</span><span lang="zh-CN" style="font-family:宋体">这个库没有安装，</span><span lang="en-US" style="font-family:Calibri">apt-get</span><span lang="zh-CN" style="font-family:宋体">安装后继续出错，搜索发现</span><span lang="en-US" style="font-family:宋体">erlang-ssl</span><span lang="zh-CN" style="font-family:宋体">这个库没有，</span><span lang="en-US" style="font-family:宋体">apt-get</span><span lang="zh-CN" style="font-family:宋体">安装后还是无效。</span><br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  最后发现一个成功解决的案例：<br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  &nbsp;<br></p>
+
+<p style="margin:0in;font-family:Calibri;font-size:11.0pt"><br>  <a href="http://permalink.gmane.org/gmane.comp.networking.rabbitmq.general/5650" target="_blank" rel="noopener">http://permalink.gmane.org/gmane.comp.networking.rabbitmq.general/5650</a><br></p>
+
+<p style="margin:0in;font-family:Calibri;font-size:11.0pt"><br>  &nbsp;<br></p>
+
+<p style="margin:0in;font-size:11.0pt"><br>  <span lang="zh-CN" style="font-family:宋体">随后将</span><span lang="en-US" style="font-family:Calibri">Erlang</span><span lang="zh-CN" style="font-family:宋体">卸载，重新编译安装（加这个参数</span><span lang="zh-CN" style="font-family:palatino;color:#222222"> ‘&#8211;with-ssl=PATH’</span><span lang="zh-CN" style="font-family:宋体">）后一切正常。</span><br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  &nbsp;<br></p>
+
+<p style="margin:0in;font-size:11.0pt"><br>  <span lang="zh-CN" style="font-family:宋体">后记：</span><span lang="en-US" style="font-family:Calibri">Erlang</span><span lang="zh-CN" style="font-family:宋体">在编译的时候如果系统缺少一些类库，比如</span><span lang="en-US" style="font-family:Calibri">odbc,ssl</span><span lang="zh-CN" style="font-family:宋体">等，会给出一些警告信息，但是并不会阻塞后面的安装，安装成功后一般会认为安装成功了（基本的测试也能通过），但是实际上一些</span><span lang="en-US" style="font-family:Calibri">erlang</span><span lang="zh-CN" style="font-family:宋体">的类库并没有成功编译安装，这种情况下重新编译安装即可。</span><br></p>
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2011/06/08/2011-06-08-mysql-convert-int-to-IP-function/" class="pre-post btn btn-default" title='mysql int整型转换为 IP地址的自定义函数'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            mysql int整型转换为 IP地址的自定义函数</span>
+    </a>
+    
+    
+    <a href="/2011/05/24/2011-05-24-nuffnang/" class="next-post btn btn-default" title='千人挑战，拿福能在行动&#8211;免费50元'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            千人挑战，拿福能在行动&#8211;免费50元</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'null'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+</body>
+</html>

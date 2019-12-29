@@ -1,0 +1,367 @@
+<!DOCTYPE HTML>
+<html lang="null">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="keywords" content="LuManager,mysqli,mysqli源码,单独安装mysqli">
+
+
+<meta name="description" content="在开始之前，首先试一下这个这个帖子里提到的方法
+http://www.zijidelu.org/forum.php?mod=viewthread&amp;tid=46214
+如果不行，按照下面的...">
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+<title>
+    
+    LuManager单独安装mysqli手记 |
+    
+    Shoot Sun Studio
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+    
+
+
+
+    
+
+</head></html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    http://snippet.shenliyang.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.shootsoft.net">
+                        Shoot Sun Studio</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="LuManager单独安装mysqli手记">
+            
+            LuManager单独安装mysqli手记
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/LuManager/">LuManager</a> <a class="tag-link" href="/tags/mysqli/">mysqli</a> <a class="tag-link" href="/tags/mysqli源码/">mysqli源码</a> <a class="tag-link" href="/tags/单独安装mysqli/">单独安装mysqli</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2012/05/12</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                2787</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>在开始之前，首先试一下这个这个帖子里提到的方法</p>
+<p><a href="http://www.zijidelu.org/forum.php?mod=viewthread&amp;tid=46214" target="_blank" rel="noopener">http://www.zijidelu.org/forum.php?mod=viewthread&amp;tid=46214</a></p>
+<p>如果不行，按照下面的方法进行(不仅仅适用于LuManager，如果是自己编译安装的php也可以这么做)：</p>
+<p>首先确定你正在使用的php版本以及php.ini的位置，LuManager自带了几个版本。如果是默认安装，应该是5.2.17。php.ini的位置应该是在</p>
+<p>/usr/local/php_fcgi/lib/php.ini</p>
+<p>要确定这些信息，可以自己编写一个 info.php</p>
+<blockquote>
+<p> &lt;?php</p>
+<p>phpinfo();</p>
+<p>?&gt;</p>
+</blockquote>
+<p>把文件存放到网站根目录，然后浏览一下。</p>
+<p>比如 <a href="http://yourdomain.com/info.php" target="_blank" rel="noopener">http://yourdomain.com/info.php</a></p>
+<p>到上述帖子里提到的LuManager的安装源码包里，我的解压到了/root/zijidelu_install路径下</p>
+<p>进入LuNamp的soft路径</p>
+<blockquote>
+<p>cd /root/zijidelu_install/LuNamp/soft</p>
+</blockquote>
+<p>用ls查看一下，应该有这个文件</p>
+<blockquote>
+<p>ls php-5.2.17.tar.gz</p>
+</blockquote>
+<p>解压缩</p>
+<blockquote>
+<p>tar -zxvf php-5.2.17.tar.gz</p>
+</blockquote>
+<p>进入mysqli的安装路径</p>
+<blockquote>
+<p>cd php-5.2.17/ext/mysqli</p>
+</blockquote>
+<p>这里是mysqli的源码，编译之前我们还需要借助phpize这个工具（感谢<a title="一只猪的微博" href="http://t.qq.com/mohock" target="_blank">@一只猪</a>同学的帮助:-)），它存在于你的php安装路径，比如</p>
+<blockquote>
+<p>/usr/local/php_fcgi/bin/phpize</p>
+</blockquote>
+<p>在当前路径下运行一下，看到如下提示：</p>
+<blockquote>
+<p>Configuring for:</p>
+<p>PHP Api Version:         20041225</p>
+<p>Zend Module Api No:      20060613</p>
+<p>Zend Extension Api No:   220060519</p>
+<p>configure.in:3: warning: prefer named diversions</p>
+<p>configure.in:3: warning: prefer named diversions</p>
+</blockquote>
+<p>继续运行下面这几个命令</p>
+<blockquote>
+<p> ./configure -with-php-config=/usr/local/php_fcgi/bin/php-config -with-mysqli=/usr/local/mysql/bin/mysql_config</p>
+<p>make</p>
+<p>make install</p>
+</blockquote>
+<p>最后会看到这个提示：</p>
+<blockquote>
+<p>Installing shared extensions:     /usr/local/php_fcgi/lib/php/extensions/no-debug-non-zts-20060613/</p>
+</blockquote>
+<p>说明安装成功。</p>
+<p>从LuManager后台重启一下ngix（如果你只用Apache那就重启一下Apache）</p>
+<p>再刷新一下info.php，搜索mysqli，如果还搜不到就得自己编辑一下php.ini了</p>
+<p>编辑之前double check一下mysqli.so是不是已经安装到上述路径了</p>
+<blockquote>
+<p>cd  /usr/local/php_fcgi/lib/php/extensions/no-debug-non-zts-20060613/</p>
+<p>ls</p>
+</blockquote>
+<p>如果看到mysqli.so就继续</p>
+<blockquote>
+<p>vim /usr/local/php_fcgi/lib/php.ini</p>
+</blockquote>
+<p>输入</p>
+<blockquote>
+<p>/mysqli</p>
+</blockquote>
+<p>然后回车，定位到这一行</p>
+<blockquote>
+<p>;extension=php_mysqli.dll</p>
+</blockquote>
+<p>输入i，进入编辑模式，然后在这之前或者之后加入一行</p>
+<blockquote>
+<p>extension=mysqli.so</p>
+</blockquote>
+<p>按下ESC，然后输入</p>
+<blockquote>
+<p>:wq</p>
+</blockquote>
+<p>如果对vim编辑不熟悉可以从LuManager后台在线编辑php.ini</p>
+<p>保存之后重启一下ngix</p>
+<p>再次查看info.php</p>
+<h2 style="text-align: center; line-height: normal; widows: 2; text-transform: none; background-color: #ffffff; font-variant: normal; font-style: normal; text-indent: 0px; letter-spacing: normal; font-family: sans-serif; white-space: normal; orphans: 2; color: #000000; font-size: 20px; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;"><br>  <a name="module_mysqli"></a>mysqli<br></h2>
+
+<p>&nbsp;</p>
+<table class="ke-zeroborder" style="text-align: left; widows: 2; text-transform: none; background-color: #ffffff; text-indent: 0px; letter-spacing: normal; border-collapse: collapse; font: medium sans-serif; white-space: normal; orphans: 2; color: #000000; margin-left: auto; margin-right: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" width="600" border="0" cellpadding="3"><br>  <tr class="h" style="background-color: #9999cc; color: #000000; font-weight: bold;"><br>    <th style="text-align: center !important; font-family: sans-serif; font-size: 12px; vertical-align: baseline; border-image: initial; border: #000000 1px solid;"><br>      MysqlI Support<br>    </th><br><br>    <th style="text-align: center !important; font-family: sans-serif; font-size: 12px; vertical-align: baseline; border-image: initial; border: #000000 1px solid;"><br>      enabled<br>    </th><br>  </tr><br><br>  <tr><br>    <td class="e" style="background-color: #ccccff; font-family: sans-serif; color: #000000; font-size: 12px; vertical-align: baseline; font-weight: bold; border-image: initial; border: #000000 1px solid;"><br>      Client API library version<br>    </td><br><br>    <td class="v" style="background-color: #cccccc; font-family: sans-serif; color: #000000; font-size: 12px; vertical-align: baseline; border-image: initial; border: #000000 1px solid;"><br>      5.1.56<br>    </td><br>  </tr><br><br>  <tr><br>    <td class="e" style="background-color: #ccccff; font-family: sans-serif; color: #000000; font-size: 12px; vertical-align: baseline; font-weight: bold; border-image: initial; border: #000000 1px solid;"><br>      Client API header version<br>    </td><br><br>    <td class="v" style="background-color: #cccccc; font-family: sans-serif; color: #000000; font-size: 12px; vertical-align: baseline; border-image: initial; border: #000000 1px solid;"><br>      5.1.56<br>    </td><br>  </tr><br><br>  <tr><br>    <td class="e" style="background-color: #ccccff; font-family: sans-serif; color: #000000; font-size: 12px; vertical-align: baseline; font-weight: bold; border-image: initial; border: #000000 1px solid;"><br>      MYSQLI_SOCKET<br>    </td><br><br>    <td class="v" style="background-color: #cccccc; font-family: sans-serif; color: #000000; font-size: 12px; vertical-align: baseline; border-image: initial; border: #000000 1px solid;"><br>      /tmp/mysql.sock<br>    </td><br>  </tr><br></table>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2012/10/10/2012-10-10-simple-ddns-tool/" class="pre-post btn btn-default" title='[C#开源]基于DNSPod的动态域名解析工具SimpleDDns'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            [C#开源]基于DNSPod的动态域名解析工具SimpleDDns</span>
+    </a>
+    
+    
+    <a href="/2012/03/28/2012-03-28-sae-storage-batch-uploads-tool/" class="next-post btn btn-default" title='发布SAE Storage批量上传工具[开源]'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            发布SAE Storage批量上传工具[开源]</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'null'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">  mysqli</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+</body>
+</html>

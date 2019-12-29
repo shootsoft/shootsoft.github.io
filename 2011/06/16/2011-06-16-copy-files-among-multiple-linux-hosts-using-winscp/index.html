@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html lang="null">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="keywords" content="Linux拷贝文件,WinSCP,多台">
+
+
+<meta name="description" content="&nbsp;
+  这纯属一个使用技巧，找了很多Linux的Windows客户端，貌似都不能在同一个用户界面上跨机器拷贝传输文件，用来用去还是WinSCP顺手，以前跨机器传输的时候都是开多个窗口，...">
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+<title>
+    
+    WinSCP跨Linux（多Linux台机器之间）拷贝传输文件 |
+    
+    Shoot Sun Studio
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+    
+
+
+
+    
+
+</head></html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    http://snippet.shenliyang.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.shootsoft.net">
+                        Shoot Sun Studio</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="WinSCP跨Linux（多Linux台机器之间）拷贝传输文件">
+            
+            WinSCP跨Linux（多Linux台机器之间）拷贝传输文件
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Linux拷贝文件/">Linux拷贝文件</a> <a class="tag-link" href="/tags/WinSCP/">WinSCP</a> <a class="tag-link" href="/tags/多台/">多台</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2011/06/16</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                3118</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>&nbsp;</p>
+<p style="margin:0in;font-size:11.0pt"><br>  <span lang="zh-CN" style="font-family:宋体">这纯属一个使用技巧，找了很多</span><span lang="en-US" style="font-family:Calibri">Linux</span><span lang="zh-CN" style="font-family:宋体">的</span><span lang="en-US" style="font-family:Calibri">Windows</span><span lang="zh-CN" style="font-family:宋体">客户端，貌似都不能在同一个用户界面上跨机器拷贝传输文件，用来用去还是</span><span lang="en-US" style="font-family:Calibri">WinSCP</span><span lang="zh-CN" style="font-family:宋体">顺手，以前跨机器传输的时候都是开多个窗口，拖放。今天偶然发现</span><span lang="en-US" style="font-family:Calibri">WinSCP</span><span lang="zh-CN" style="font-family:宋体">也可以在同一个用户界面上跨机器拷贝传输文件。</span><br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  &nbsp;<br></p>
+
+<p style="margin:0in;font-size:11.0pt"><br>  <span lang="zh-CN" style="font-family:宋体">首先要确保</span><span lang="en-US" style="font-family:Calibri">WinSCP</span><span lang="zh-CN" style="font-family:宋体">的工具栏&ldquo;会话按钮&rdquo;是显示状态，方便在多台</span><span lang="en-US" style="font-family:Calibri">Linux</span><span lang="zh-CN" style="font-family:宋体">之间切换界面</span><br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  <a href="http://www.flickr.com/photos/63244076@N04/5839525910/" title="Flickr 上 model123 的 WinSCP会话按钮" target="_blank" rel="noopener"><img alt="WinSCP会话按钮" height="458" src="http://farm4.static.flickr.com/3491/5839525910_bc8be23141.jpg" width="443"></a><br></p>
+
+<p style="margin:0in;font-size:11.0pt"><br>  <span lang="zh-CN" style="font-family:宋体">点击&ldquo;会话按钮&rdquo;工具栏的倒数第二个按钮，可以登录更多的</span><span lang="en-US" style="font-family:Calibri">Linux</span><span lang="zh-CN" style="font-family:宋体">机器（注意：要拷贝的文件的目标机器必须先在这里登录）</span><br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  <img alt="WinSCP打开更多会话" height="144" src="http://farm4.static.flickr.com/3134/5838974697_f95f92bdb3.jpg" width="280"><br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  在某一台需要拷贝的文件上单击鼠标右键，选择&ldquo;远程复制&rdquo;<br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  <a href="http://www.flickr.com/photos/63244076@N04/5838974729/" title="Flickr 上 model123 的 WinSCP远程复制菜单" target="_blank" rel="noopener"><img src="http://farm3.static.flickr.com/2727/5838974729_3996144034.jpg" width="329" height="267" alt="WinSCP远程复制菜单"></a><br></p>
+
+<p style="margin:0in;font-size:11.0pt"><br>  <span lang="zh-CN" style="font-family:宋体">在新弹出的窗口中&ldquo;目标会话&rdquo;就可以选择其他的</span><span lang="en-US" style="font-family:Calibri">Linux</span><span lang="zh-CN" style="font-family:宋体">机器以及对应的目录了。</span><br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  <a href="http://www.flickr.com/photos/63244076@N04/5838974749/" title="Flickr 上 model123 的 WinSCP远程复制对话框" target="_blank" rel="noopener"><img src="http://farm6.static.flickr.com/5119/5838974749_9f412d125a.jpg" width="336" height="211" alt="WinSCP远程复制对话框"></a><br></p>
+
+<p style="margin:0in;font-family:宋体;font-size:11.0pt"><br>  缺点就是不能同时拷贝到多台机器，以及文件拷贝实际上是先拷贝到本地，再拷贝到远程<br></p>
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2011/06/27/2011-06-27-import-mysql-failure-in-lumanager-installation/" class="pre-post btn btn-default" title='LuManager安装过程导入Mysql失败的解决办法'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            LuManager安装过程导入Mysql失败的解决办法</span>
+    </a>
+    
+    
+    <a href="/2011/06/13/2011-06-13-solution-for-erlang-odbc-start-failure-in-linux/" class="next-post btn btn-default" title='Linux下Erlang中无法运行odbc:start()的解决办法'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Linux下Erlang中无法运行odbc:start()的解决办法</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'null'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+</body>
+</html>

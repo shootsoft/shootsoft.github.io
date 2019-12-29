@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html lang="null">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="keywords" content="MySQL,int转换,ip,自定义函数">
+
+
+<meta name="description" content="碰到IP地址与Int转换的问题，得到了一个csv格式的ip列表，但是ip地址却是int格式。因为使用的时候主要是在数据库里使用，所以写个程序转换一把有些麻烦，后来想到mysql里面有自定义函数，...">
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+<title>
+    
+    mysql int整型转换为 IP地址的自定义函数 |
+    
+    Shoot Sun Studio
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+    
+
+
+
+    
+
+</head></html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    http://snippet.shenliyang.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.shootsoft.net">
+                        Shoot Sun Studio</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="mysql int整型转换为 IP地址的自定义函数">
+            
+            mysql int整型转换为 IP地址的自定义函数
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/MySQL/">MySQL</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/MySQL/">MySQL</a> <a class="tag-link" href="/tags/int转换/">int转换</a> <a class="tag-link" href="/tags/ip/">ip</a> <a class="tag-link" href="/tags/自定义函数/">自定义函数</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2011/06/08</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                3126</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>碰到IP地址与Int转换的问题，得到了一个csv格式的ip列表，但是ip地址却是int格式。因为使用的时候主要是在数据库里使用，所以写个程序转换一把有些麻烦，后来想到mysql里面有自定义函数，于是尝试了一把，顺利解决:-)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line">  <span class="keyword">USE</span> <span class="string">`iptest`</span>$$</span><br><span class="line">  <span class="keyword">DROP</span> <span class="keyword">FUNCTION</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`int2ip`</span>$$</span><br><span class="line">  <span class="keyword">CREATE</span> DEFINER=<span class="string">`root`</span>@<span class="string">`%`</span> <span class="keyword">FUNCTION</span> <span class="string">`int2ip`</span>(<span class="keyword">num</span> <span class="built_in">BIGINT</span>) <span class="keyword">RETURNS</span> <span class="built_in">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">CHARSET</span> utf8BEGIN </span><br><span class="line">    <span class="keyword">DECLARE</span> <span class="keyword">result</span> <span class="built_in">VARCHAR</span>(<span class="number">255</span>);</span><br><span class="line">    <span class="keyword">SET</span> <span class="keyword">result</span> = <span class="keyword">CONCAT</span>(<span class="keyword">CAST</span>((<span class="keyword">num</span> <span class="keyword">DIV</span> <span class="number">16777216</span>% <span class="number">256</span>) <span class="keyword">AS</span> SIGNED), ‘.’, <span class="keyword">CAST</span>(<span class="keyword">num</span> <span class="keyword">DIV</span> <span class="number">65536</span> % <span class="number">256</span> <span class="keyword">AS</span> SIGNED ), ‘.’, <span class="keyword">CAST</span>(<span class="keyword">num</span> <span class="keyword">DIV</span> <span class="number">256</span>%<span class="number">256</span> <span class="keyword">AS</span> SIGNED ), ‘.’, <span class="keyword">CAST</span>(<span class="keyword">num</span>%<span class="number">256</span> <span class="keyword">AS</span> SIGNED ));</span><br><span class="line">    RETURN result;</span><br><span class="line">  <span class="keyword">END</span>$$</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+<p>使用的时候：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> int2ip(<span class="symbol">`ip`</span>) <span class="keyword">from</span> table;</span><br></pre></td></tr></table></figure>
+<p>附int整型和ip转换的公式，摘自：<a href="http://www.shootsoft.net/129" target="_blank" rel="noopener">Linux(Debian)下正确编译安装Erlang的方法</a></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IP<span class="built_in"> Address </span>= 202.186.13.4</span><br><span class="line">w = 202, x = 186, y = 13 <span class="keyword">and</span> z = 4</span><br><span class="line">INT<span class="built_in"> IP </span>Number = 16777216<span class="number">*202</span> + 65536<span class="number">*186</span> + 256<span class="number">*13</span> + 4</span><br><span class="line">= 3388997632 + 12189696 + 3328 + 4</span><br><span class="line">= 3401190660</span><br></pre></td></tr></table></figure>
+<p>INT 转 IP:</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">w = int (<span class="built_in"> IP </span>Number / 16777216 ) % 256</span><br><span class="line">x = int (<span class="built_in"> IP </span>Number / 65536 ) % 256</span><br><span class="line">y = int (<span class="built_in"> IP </span>Number / 256 ) % 256</span><br><span class="line">z = int (<span class="built_in"> IP </span>Number ) % 256</span><br></pre></td></tr></table></figure>
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2011/06/13/2011-06-13-install-erlang-in-debian/" class="pre-post btn btn-default" title='Linux(Debian)下正确编译安装Erlang的方法'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            Linux(Debian)下正确编译安装Erlang的方法</span>
+    </a>
+    
+    
+    <a href="/2011/05/26/2011-05-26-solution-for-erlang-no-such-file-or-directory-crypto-app/" class="next-post btn btn-default" title='Erlang {&#8220;no such file or directory&#8221;,&#8221;crypto.app&#8221;}  的解决方法'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            Erlang {&#8220;no such file or directory&#8221;,&#8221;crypto.app&#8221;}  的解决方法</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'null'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+</body>
+</html>

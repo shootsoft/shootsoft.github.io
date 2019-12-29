@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html lang="null">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="keywords" content="undefined">
+
+
+<meta name="description" content="这个是VB6编写程序时常常碰到的问题:想实现像瑞星那样自动连接到网络下载更新程序,然后再在本地实现更新的功能.这里会遇到三个问题:
+1.是版本的控制.假如从1.1到1.2只更新了几个文件,1.2...">
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+<title>
+    
+    VB6程序的自动更新模块 |
+    
+    Shoot Sun Studio
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+    
+
+
+
+    
+
+</head></html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    http://snippet.shenliyang.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.shootsoft.net">
+                        Shoot Sun Studio</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="VB6程序的自动更新模块">
+            
+            VB6程序的自动更新模块
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Download/">Download</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2010/06/24</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                3475</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>这个是VB6编写程序时常常碰到的问题:想实现像瑞星那样自动连接到网络下载更新程序,然后再在本地实现更新的功能.这里会遇到三个问题:</p>
+<p>1.是版本的控制.假如从1.1到1.2只更新了几个文件,1.2到1.3又更新了另外几个文件,假如用户错过了1.1版的更新,那么这个1.3版的升级包应该不仅适合于1.2,并且也应该适合1.1才行.但是假如1.2-1.3升级包特别小,而1.1-1.2升级包特别大的话那么1.2版升级的用户就不需要下载非常大的升级包才行.以后的每个版本升级都要照顾到1.1版的升级才行.所以,简单的办法是对需要有可能升级的所有文件进行版本控制.每个文件对应一个版本号.当某个文件版本号低于服务器上文件的版本号时就进行升级的操作.</p>
+<p>2.是更新程序自身的更新.像瑞星之类的软件都能实现对更新程序自身的更新.而对正在运行的一个exe文件进行读写在VB6里是不太容易实现的.这里可以采取&#8221;曲线救国&#8221;的道路:程序一运行先将自身拷贝一份并改名为temp.exe.然后运行这个temp.exe来进行连接服务器下载更新文件的操作.</p>
+<p>3.是目录的检测.假如更新文件放在新建的文件夹里那么程序应当可以新建文件夹(多级).我是从<a href="http://www.planet-source-code.com找到的一个创建多级目录的函数:-" target="_blank" rel="noopener">www.planet-source-code.com找到的一个创建多级目录的函数:-</a>)</p>
+<p>其他还有一些比如:检测正在运行的主程序,关闭主程序等操作直接调用相应的API即可实现.</p>
+<p>本模块升级服务器采用的是FTP,可以用进度条来显示下载文件个数和单个文件下载进度.</p>
+<p><a href="http://www.shootsoft.net/wp-content/uploads/2010/06/06012614252436.gif" target="_blank" rel="noopener"><img class="alignnone size-full wp-image-57" title="VB6 Auto Update" src="http://www.shootsoft.net/wp-content/uploads/2010/06/06012614252436.gif" alt width="479" height="351" srcset="https://www.shootsoft.net/wp-content/uploads/2010/06/06012614252436.gif 479w, https://www.shootsoft.net/wp-content/uploads/2010/06/06012614252436-300x219.gif 300w" sizes="(max-width: 479px) 100vw, 479px"></a></p>
+<p><a href="http://code.google.com/p/shootsoft/downloads/detail?name=VB6_Auto_Update.rar" target="_blank">猛击这里下载</a></p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2010/06/24/2010-06-24-vb6_rating_answers/" class="pre-post btn btn-default" title='VB6基于TCP协议的抢答器系统'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            VB6基于TCP协议的抢答器系统</span>
+    </a>
+    
+    
+    <a href="/2010/06/24/2010-06-24-computer_graphics_c_sharp/" class="next-post btn btn-default" title='计算机图形学算法演示程序[C#]'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            计算机图形学算法演示程序[C#]</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'null'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+</body>
+</html>

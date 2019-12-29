@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html lang="null">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="keywords" content="Erlang,Unable to load crypto library">
+
+
+<meta name="description" content="在一台64位的Widnows2008上，安装了Erlang之后，运行erl，测试几条erlang语句，一切正常。但是在试图启动一个使用了SSL类库的应用程序时，出现了如下的提示：
+
+Unable...">
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+<title>
+    
+    [Erlang] Unable to load crypto library Windows下的解决办法 |
+    
+    Shoot Sun Studio
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+    
+
+
+
+    
+
+</head></html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    http://snippet.shenliyang.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.shootsoft.net">
+                        Shoot Sun Studio</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="[Erlang] Unable to load crypto library Windows下的解决办法">
+            
+            [Erlang] Unable to load crypto library Windows下的解决办法
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Erlang/">Erlang</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/Erlang/">Erlang</a> <a class="tag-link" href="/tags/Unable-to-load-crypto-library/">Unable to load crypto library</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2011/10/23</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                2989</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>在一台64位的Widnows2008上，安装了Erlang之后，运行erl，测试几条erlang语句，一切正常。但是在试图启动一个使用了SSL类库的应用程序时，出现了如下的提示：</p>
+<blockquote>
+<p>Unable to load crypto library. Failed with error:</p>
+<p>&#8220;load_failed, Failed to load NIF library c:/PROGRA~2/ERL58~1.2/lib/crypto-2.0.2/</p>
+<p>priv/lib/crypto: &#8216;Unspecified error’&#8221;</p>
+<p>OpenSSL might not be installed on this system.</p>
+<p>&#8220;(pubSageService@Apptest2)1&gt; i</p>
+<p>=ERROR REPORT==== 21-Oct-2011::09:47:29 ===</p>
+<p>The on_load function for module crypto returned {error,</p>
+<p>{load_failed,</p>
+<p>&#8220;Failed to load NIF library c:</p>
+<p>/PROGRA~2/ERL58~1.2/lib/crypto-2.0.2/priv/lib/crypto: &#8216;Unspecified error’&#8221;}}</p>
+<p>n(pubSageService@Apptest2)1&gt; it terminating in do_boot&#8221;,{undef,[{crypto,start,[]</p>
+<p>},{init,start_it,1},{init,start_em,1}]}}</p>
+<p>&nbsp;</p>
+<p>Crash dump was written to: erl_crash.dump</p>
+<p>init terminating in do_boot ()</p>
+</blockquote>
+<p>该机器已经安装了64位的OpenSSL类库（下载<a href="http://www.slproweb.com/products/Win32OpenSSL.html" target="_blank" rel="noopener">http://www.slproweb.com/products/Win32OpenSSL.html</a>）</p>
+<p>Google之后找到了一篇Google Groups上面的讨论文章</p>
+<p><a href="http://groups.google.com/group/erlang-programming/browse_thread/thread/288684b61116baf3" target="_blank" rel="noopener">http://groups.google.com/group/erlang-programming/browse_thread/thread/288684b61116baf3</a></p>
+<p>首先怀疑Win32的 OpenSSL类库安装的有问题，于是重新安装了一遍，之前安装的忘记最后一步是否选择了将OpenSSL的类库拷贝打到系统目录下（Windows\System32\）,重新安装的时候确认拷贝，但是启动仍然失败。</p>
+<p>接下来又把那几个dll拷贝到Erlang的安装目录（就是上面的提示的那个目录）：</p>
+<blockquote>
+<p>c:/PROGRA~2/ERL58~1.2/lib/crypto-2.0.2/priv/lib/crypto</p>
+</blockquote>
+<p>这个是缩写的目录，实际是：</p>
+<blockquote>
+<p>C:\Program Files (x86)\erl5.8.2\lib\crypto-2.0.2\priv\lib</p>
+</blockquote>
+<p>这次换了个错误提示：</p>
+<blockquote>
+<p>Unable to load crypto library. Failed with error:</p>
+<p>&#8220;load_failed, Failed to load NIF library c:/PROGRA~2/ERL58~1.2/lib/crypto-2.0.2/</p>
+<p>priv/lib/crypto: &#8216;Unspecified error’&#8221;</p>
+<p>OpenSSL might not be installed on this system.</p>
+<p>&#8220;(pubSageService@Apptest2)1&gt; i</p>
+<p>=ERROR REPORT==== 21-Oct-2011::09:47:29 ===</p>
+<p>The on_load function for module crypto returned {error,</p>
+<p>{load_failed,</p>
+<p>&#8220;Failed to load NIF library c:</p>
+<p>/PROGRA~2/ERL58~1.2/lib/crypto-2.0.2/priv/lib/crypto: &#8216;Unspecified error’&#8221;}}</p>
+<p>n(pubSageService@Apptest2)1&gt; it terminating in do_boot&#8221;,{undef,[{crypto,start,[]</p>
+<p>},{init,start_it,1},{init,start_em,1}]}}</p>
+<p>&nbsp;</p>
+<p>Crash dump was written to: erl_crash.dump</p>
+<p>init terminating in do_boot ()</p>
+</blockquote>
+<p>又仔细看了一遍帖子，怀疑是64的OpenSSL和64位的Windows 2008不兼容，于是重新安装了一个32位的，一切正常~</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2012/03/28/2012-03-28-sae-storage-batch-uploads-tool-tutorial/" class="pre-post btn btn-default" title='SAE Storage批量上传工具使用教程'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            SAE Storage批量上传工具使用教程</span>
+    </a>
+    
+    
+    <a href="/2011/06/27/2011-06-27-import-mysql-failure-in-lumanager-installation/" class="next-post btn btn-default" title='LuManager安装过程导入Mysql失败的解决办法'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            LuManager安装过程导入Mysql失败的解决办法</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'null'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+</body>
+</html>

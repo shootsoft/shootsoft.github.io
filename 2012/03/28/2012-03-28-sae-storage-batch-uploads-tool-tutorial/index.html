@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html lang="null">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="keywords" content="SAE,Sina App Engine,Storage,批量上传,教程">
+
+
+<meta name="description" content="0.1 版本下载：
+https://github.com/downloads/shootsoft/SAEMutipleUploads/SAE%20Mutiple%20Uploads%200.1....">
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+<title>
+    
+    SAE Storage批量上传工具使用教程 |
+    
+    Shoot Sun Studio
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+    
+
+
+
+    
+
+</head></html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    http://snippet.shenliyang.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.shootsoft.net">
+                        Shoot Sun Studio</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SAE Storage批量上传工具使用教程">
+            
+            SAE Storage批量上传工具使用教程
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Documents/">Documents</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/SAE/">SAE</a> <a class="tag-link" href="/tags/Sina-App-Engine/">Sina App Engine</a> <a class="tag-link" href="/tags/Storage/">Storage</a> <a class="tag-link" href="/tags/批量上传/">批量上传</a> <a class="tag-link" href="/tags/教程/">教程</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2012/03/28</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                2832</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>0.1 版本下载：</p>
+<p><a href="https://github.com/downloads/shootsoft/SAEMutipleUploads/SAE%20Mutiple%20Uploads%200.1.7z" data-ke-src="https://github.com/downloads/shootsoft/SAEMutipleUploads/SAE%20Mutiple%20Uploads%200.1.7z" target="_blank" rel="noopener">https://github.com/downloads/shootsoft/SAEMutipleUploads/SAE%20Mutiple%20Uploads%200.1.7z</a></p>
+<p>源码下载：</p>
+<p><a href="https://github.com/shootsoft/SAEMutipleUploads" data-ke-src="https://github.com/shootsoft/SAEMutipleUploads" target="_blank" rel="noopener">https://github.com/shootsoft/SAEMutipleUploads</a></p>
+<p>首先在本地编辑【SAE_PHP】目录下的【sae_mutiple_uploads.php】文件，重新设置密码。</p>
+<p>在SAE上创建好自己的应用，如果你是从应用仓库安装的Wordpress，可以跳过这一步直接去上传PHP文件了；否则需要自己创建Storage服务的domain：</p>
+<p><a href="http://www.shootsoft.net/wp-content/uploads/2012/03/Storage-Domain2.png" target="_blank" rel="noopener"><img class="aligncenter size-full wp-image-152" title="Storage Domain" src="http://www.shootsoft.net/wp-content/uploads/2012/03/Storage-Domain2.png" alt width="319" height="183" srcset="https://www.shootsoft.net/wp-content/uploads/2012/03/Storage-Domain2.png 319w, https://www.shootsoft.net/wp-content/uploads/2012/03/Storage-Domain2-300x172.png 300w" sizes="(max-width: 319px) 100vw, 319px"></a></p>
+<p>上传有很多种方法，可以使用SAE的发布工具，也可以使用SVN，这里介绍从网页上传的方法。</p>
+<p>从【我的首页】进入应用程序的配置界面，选择代码管理：</p>
+<p style="text-align: center;"><br>  <a href="http://www.shootsoft.net/wp-content/uploads/2012/03/代码管理.png" target="_blank" rel="noopener"><img class="aligncenter  wp-image-153" title="代码管理" src="http://www.shootsoft.net/wp-content/uploads/2012/03/代码管理.png" alt width="481" height="386" srcset="https://www.shootsoft.net/wp-content/uploads/2012/03/代码管理.png 534w, https://www.shootsoft.net/wp-content/uploads/2012/03/代码管理-300x241.png 300w" sizes="(max-width: 481px) 100vw, 481px"></a><br></p>
+
+<p>从右边选择编辑代码，需要安全码验证：</p>
+<p style="text-align: center;"><br>  <a href="http://www.shootsoft.net/wp-content/uploads/2012/03/编辑代码.png" target="_blank" rel="noopener"><img class="aligncenter  wp-image-154" title="编辑代码" src="http://www.shootsoft.net/wp-content/uploads/2012/03/编辑代码.png" alt width="489" height="57" srcset="https://www.shootsoft.net/wp-content/uploads/2012/03/编辑代码.png 815w, https://www.shootsoft.net/wp-content/uploads/2012/03/编辑代码-300x34.png 300w" sizes="(max-width: 489px) 100vw, 489px"></a><br></p>
+
+<p>在新打开的页面中，直接选择【上传文件】一个黄色的向上的箭头，选择【SAE_PHP】目录下的【sae_mutiple_uploads.php】。</p>
+<p><a href="http://www.shootsoft.net/wp-content/uploads/2012/03/上传文件.png" target="_blank" rel="noopener"><img class="aligncenter size-full wp-image-155" title="上传文件" src="http://www.shootsoft.net/wp-content/uploads/2012/03/上传文件.png" alt width="268" height="120"></a></p>
+<p>打开【SAE Mutiple Uploads.exe】</p>
+<p style="text-align: center;"><br>  <a href="http://www.shootsoft.net/wp-content/uploads/2012/03/SAEMutipleUploads.png" target="_blank" rel="noopener"><img class="aligncenter  wp-image-169" title="SAEMutipleUploads" src="http://www.shootsoft.net/wp-content/uploads/2012/03/SAEMutipleUploads.png" alt width="540" height="251" srcset="https://www.shootsoft.net/wp-content/uploads/2012/03/SAEMutipleUploads.png 600w, https://www.shootsoft.net/wp-content/uploads/2012/03/SAEMutipleUploads-300x139.png 300w" sizes="(max-width: 540px) 100vw, 540px"></a><br></p>
+
+<p>【上传文件接收地址】指的就是刚才上传的php，假如你上传到了根目录，你的应用程序叫 testapp，那么这里就应该填</p>
+<p><a href="http://testapp.sinaapp.com/sae_upload_ramdom.php" data-ke-src="http://testapp.sinaapp.com/sae_upload_ramdom.php" target="_blank" rel="noopener">http://testapp.sinaapp.com/sae_mutiple_uploads.php</a></p>
+<p>【命名空间】指Storage的Domain名称。</p>
+<p>【密码】是第一步配置的密码</p>
+<p>【本地路径】指要批量上传的本地文件夹路径，支持多级文件夹，上传过程会自己处理。</p>
+<p>配置好后点击【上传】，等待完成即可。</p>
+<p><strong>最后不要忘记了删除那个批量上传文件的sae_mutiple_uploads.php。</strong></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2012/03/28/2012-03-28-sae-storage-batch-uploads-tool/" class="pre-post btn btn-default" title='发布SAE Storage批量上传工具[开源]'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            发布SAE Storage批量上传工具[开源]</span>
+    </a>
+    
+    
+    <a href="/2011/10/23/2011-10-23-erlang-unable-to-load-crypto-library-windows/" class="next-post btn btn-default" title='[Erlang] Unable to load crypto library Windows下的解决办法'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            [Erlang] Unable to load crypto library Windows下的解决办法</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'null'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+</body>
+</html>

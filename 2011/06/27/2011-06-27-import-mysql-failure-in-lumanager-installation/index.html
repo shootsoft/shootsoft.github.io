@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<html lang="null">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Shoot Sun Studio">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="https://blog.shootsoft.net">
+    <!--SEO-->
+
+<meta name="keywords" content="LuManager,MySQL安装失败,解决办法">
+
+
+<meta name="description" content="LuManager是一个优秀的国产Linux服务器管理软件，集成了Apache，Nigix，MySQL，FTP，Bind，Memcache，PHP5等软件包，可以实现Apache与Nigix的一...">
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+<title>
+    
+    LuManager安装过程导入Mysql失败的解决办法 |
+    
+    Shoot Sun Studio
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Shoot Sun Studio" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+    
+
+
+
+    
+
+</head></html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    http://snippet.shenliyang.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='Michael Yin'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://blog.shootsoft.net">
+                        Shoot Sun Studio</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                Home</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="LuManager安装过程导入Mysql失败的解决办法">
+            
+            LuManager安装过程导入Mysql失败的解决办法
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/LuManager/">LuManager</a> <a class="tag-link" href="/tags/MySQL安装失败/">MySQL安装失败</a> <a class="tag-link" href="/tags/解决办法/">解决办法</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2011/06/27</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                3107</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p><a href="http://www.zijidelu.org/" target="_blank" rel="noopener">LuManager</a>是一个优秀的国产Linux服务器管理软件，集成了Apache，Nigix，MySQL，FTP，Bind，Memcache，PHP5等软件包，可以实现Apache与Nigix的一键切换，多服务器负载均衡，域名智能解析，用户管理，流量监测功能等。可以通过Web界面来管理整个服务器，还能一键安装DedeCMS，Discuz!等Web应用程序。</p>
+<p>LuManager在安装和使用过程中可能碰到导入Mysql失败的情况。</p>
+<p>一般有2种情况：</p>
+<p>情况1 安装MySQL时出错</p>
+<blockquote>
+<p>Mysql 安装成功，继续安装LuNamp1.0</p>
+<p>Mysql was successfully installed! Continue&#8230;</p>
+<p>已耗时：30 分钟</p>
+<p>Runtime: 30 分钟</p>
+<p>ERROR 2002 (HY000): Can&#8217;t connect to local MySQL server through socket &#8216;/tmp/mysql.sock&#8217; (2)</p>
+<p>MySQL数据导入不成功，可能是数据库没启动，或者是MySQL没安装成功，请重装一次试试！</p>
+<p>Mysql data was not imported！</p>
+<p>LuNamp安装失败</p>
+<p>LuNamp was install failed</p>
+</blockquote>
+<p>分析：</p>
+<p>原来系统安装了一个MySQL，在系统原有MySQL没有停止服务的时候开始安装了LuManager，有可能是原有MySQL服务产生了影响。</p>
+<p>解决：</p>
+<p>杀死系统中正在运行的MySQL</p>
+<p>方法1</p>
+<p>如果你知道原有的MySQL服务器root用户密码，那么通过这个命令就能停止（忘记密码的看方法2）：</p>
+<blockquote>
+<p>mysqladmin -uroot -p&#8217;password&#8217; shutdown</p>
+</blockquote>
+<p>注意：</p>
+<ol>
+<li><p>/etc/init.d/mysql stop 并不是正确的停止mysql服务的方法！</p>
+</li>
+<li><p>如果你试图通过 /usr/local/LuNamp/cmd 目录下的 mysql-stop 来停止服务，那么你可能会碰到如下提示：</p>
+</li>
+</ol>
+<blockquote>
+<p>protest1:/usr/local/LuNamp/cmd# ./mysql-stop</p>
+<p>1</p>
+<p>MySQL manager or server PID file could not be found! failed!</p>
+</blockquote>
+<p>可以通过方法2来解决</p>
+<p>方法2</p>
+<p>首先确保当前是root用户，运行如下命令：</p>
+<blockquote>
+<p>protest1:/usr/local/LuNamp/cmd# ps -Af | grep mysqld</p>
+</blockquote>
+<p>返回结果如下（注意加粗的那一行，那个PID就是MySQL的进程ID）：</p>
+<blockquote>
+<p>root      6928     1  0 Jun21 ?        00:00:00 /bin/sh /usr/bin/mysqld_safe</p>
+<p><strong>mysql    17427  6928  0 14:56 ?        00:00:00 /usr/sbin/mysqld &#8211;basedir=/usr &#8211;datadir=/var/lib/mysql &#8211;user=mysql &#8211;pid-file=/var/run/mysqld/mysqld.pid &#8211;skip-external-locking &#8211;port=3306 &#8211;socket=/var/run/mysqld/mysqld.sock</strong></p>
+<p>root     17428  6928  0 14:56 ?        00:00:00 logger -p daemon.err -t mysqld_safe -i -t mysqld</p>
+<p>root     17460 17340  0 14:58 pts/2    00:00:00 grep mysqld</p>
+</blockquote>
+<p>接着运行</p>
+<blockquote>
+<p>protest1:/usr/local/LuNamp/cmd#Kill 17427</p>
+</blockquote>
+<p>杀死了MySQL进程后，重新运行./zijidelu_install.sh就可以了</p>
+<p>情况2 进入系统时出错，提示：</p>
+<blockquote>
+<p lang="en-US"><br>  Can&#8217;t connect to local MySQL server through socket &#8216;/tmp/mysql.sock’(2)<br></p>
+</blockquote>
+<p>截图：</p>
+<p style="text-align: center;"><br>  <a href="http://www.shootsoft.net/wp-content/uploads/2011/06/5876921168_e9950bddfc.jpg" target="_blank" rel="noopener"><img class="aligncenter size-full wp-image-141" title="LuManager登录MySQL错误" src="http://www.shootsoft.net/wp-content/uploads/2011/06/5876921168_e9950bddfc.jpg" alt width="500" height="194" srcset="https://www.shootsoft.net/wp-content/uploads/2011/06/5876921168_e9950bddfc.jpg 500w, https://www.shootsoft.net/wp-content/uploads/2011/06/5876921168_e9950bddfc-300x116.jpg 300w" sizes="(max-width: 500px) 100vw, 500px"></a><br></p>
+
+<p>解决方法：</p>
+<p>首先参考情况1的方法1或者方法2来杀死当前正在运行的MySQL服务，然后以root用户身份进入</p>
+<blockquote>
+<p>/usr/local/LuNamp/cmd</p>
+</blockquote>
+<p>运行当前目录的mysql-start</p>
+<blockquote>
+<p>protest1:/usr/local/LuNamp/cmd#./mysql-start</p>
+</blockquote>
+<p>然后刷新LuManager的Web界面应该就能顺利进入了:-)</p>
+<p>&nbsp;</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2011/10/23/2011-10-23-erlang-unable-to-load-crypto-library-windows/" class="pre-post btn btn-default" title='[Erlang] Unable to load crypto library Windows下的解决办法'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            [Erlang] Unable to load crypto library Windows下的解决办法</span>
+    </a>
+    
+    
+    <a href="/2011/06/16/2011-06-16-copy-files-among-multiple-linux-hosts-using-winscp/" class="next-post btn btn-default" title='WinSCP跨Linux（多Linux台机器之间）拷贝传输文件'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            WinSCP跨Linux（多Linux台机器之间）拷贝传输文件</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'null'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            Table of Contents
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+</body>
+</html>
